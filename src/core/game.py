@@ -44,6 +44,11 @@ class Game:
             self.clock.tick(60)
             self.frame_count += 1
 
+            # Check if dino is still alive
+            if self.dino.isDead:
+                self.running = False  # stop the game
+                print("Game Over")
+
             # Updated Pygame
             pygame.display.flip()
 
