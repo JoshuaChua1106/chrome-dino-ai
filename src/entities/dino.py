@@ -96,3 +96,7 @@ class Dino:
     def setisDead(self, status):
         self.isDead = status
 
+    def resetDino(self):
+        self.x = 100
+        self.y = 100
+        self.isDead = False

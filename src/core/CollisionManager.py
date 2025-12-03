@@ -18,6 +18,7 @@ class CollisionManager:
         dino_rect = self.dino.get_dino_rect()
         self.obstacleListRect = self.ObstacleSpawner.getObstacleListRect()
 
+        self.isCollided = False
         for obstacleRect in self.obstacleListRect:
             if dino_rect.colliderect(obstacleRect):
                 self.isCollided = True

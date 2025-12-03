@@ -1,7 +1,6 @@
 from ..entities.dino import Dino
 from ..entities.obstacles.ObstacleSpawner import ObstacleSpawner
 from .CollisionManager import CollisionManager
-from ..gameState.loseState import LoseState
 from ..gameState.playState import PlayState
 from ..gameState.menuState import MenuState
 
@@ -33,7 +32,6 @@ class Game:
         self.dino = Dino()
         self.ObstacleSpawner = ObstacleSpawner(-4)
         self.CollisionManager = CollisionManager(self.dino, self.ObstacleSpawner)
-        self.LoseState = LoseState()
         self.MenuState = MenuState()
         self.PlayState = PlayState()
 
@@ -56,9 +54,8 @@ class Game:
             self.clock.tick(60)
             self.frame_count += 1
 
-            # Check if dino is still alive
-            # if self.dino.isDead:
-            #     self.gamestate = "lose"
+            if self.dino.isDead == True:
+                self.gamestate = "lose"
 
             # Updated Pygame
             pygame.display.flip()
@@ -69,6 +66,8 @@ class Game:
             self.MenuState.update()
         elif self.gamestate == "play":
             self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager)
+        elif self.gamestate == "lose":
+            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager)
 
 
     def draw(self):
@@ -78,25 +77,28 @@ class Game:
         if self.gamestate == "menu":
             self.MenuState.draw(self.screen)
         elif self.gamestate == "play":
-            self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count)
+            self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
+        elif self.gamestate == "lose":
+            self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
 
 
 
     def handle_events(self):
-
-        if self.gamestate == "menu":
-            for event in pygame.event.get():
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                    self.running = False
+            if self.gamestate == "menu":
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.gamestate = "play"
 
-        elif self.gamestate == "play":
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-
+            elif self.gamestate == "play":
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.dino.jump()
 
-            
+            elif self.gamestate == "lose":
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.PlayState.resetGame(self.dino, self.ObstacleSpawner)
+                        self.gamestate = "play"

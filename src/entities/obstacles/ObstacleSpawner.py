@@ -66,3 +66,6 @@ class ObstacleSpawner:
     def stopAllObstacles(self):
         for obstacle in self.obstacleList:
             obstacle.setIsStopped(True)
+
+    def resetObstacles(self):
+        self.obstacleList = []
