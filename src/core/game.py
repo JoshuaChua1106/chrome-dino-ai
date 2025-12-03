@@ -30,7 +30,7 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
-        self.ObstacleSpawner = ObstacleSpawner(-4)
+        self.ObstacleSpawner = ObstacleSpawner(-6)
         self.CollisionManager = CollisionManager(self.dino, self.ObstacleSpawner)
         self.MenuState = MenuState()
         self.PlayState = PlayState()
