@@ -5,24 +5,32 @@ class Game:
     def __init__(self, screen):
         self.screen = screen
         self.clock = pygame.time.Clock()
-        self.dino = Dino()
         self.running = True
+
+
+        # Instantiate classes
+        self.dino = Dino()
+
 
     def run(self):
         while self.running:
+            self.draw()
             self.handle_events()
             self.update()
-            self.draw()
-            pygame.display.flip()
             self.clock.tick(60)
+            pygame.display.flip()
+
 
     def update(self):
         self.dino.update()
 
     def draw(self):
         self.screen.fill("#EDEEF0")
+        self.dino.draw(self.screen)
 
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+
+            

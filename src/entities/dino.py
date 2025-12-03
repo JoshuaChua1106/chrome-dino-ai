@@ -1,5 +1,12 @@
+import pygame
+import os
+
 class Dino:
     def __init__(self):
+
+        # Dino imaging
+        self.image = pygame.image.load(os.path.join("assets", "dino", "DinoRun1.png"))
+        self.location = (600,600)
 
         # Dino Location
         self.y = 300
@@ -14,6 +21,11 @@ class Dino:
 
         # Other
         self.ground_y = 300
+
+    def draw(self, screen):
+        self.img_location = self.image.get_rect()
+        self.img_location.center = self.location
+        screen.blit(self.image, self.img_location)
 
 
     def jump(self):
