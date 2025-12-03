@@ -63,6 +63,5 @@ class Dino:
 
     def animate(self, screen, frame):
         animation_step = (frame//20) % 2
-        print(animation_step)
         screen.blit(self.animation_list[animation_step], self.img_location)
 
