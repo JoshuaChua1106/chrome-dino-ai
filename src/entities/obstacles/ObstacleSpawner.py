@@ -49,3 +49,6 @@ class ObstacleSpawner:
     def draw(self, screen):
         for obstacle in self.obstacleList:
             obstacle.draw(screen)
+
+    def getObstacleList(self):
+        return self.obstacleList
