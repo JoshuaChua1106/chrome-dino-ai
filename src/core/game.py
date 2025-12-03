@@ -1,5 +1,5 @@
 from ..entities.dino import Dino
-from ..entities.obstacles.ObstacleFactory import ObstacleFactory
+from ..entities.obstacles.ObstacleSpawner import ObstacleSpawner
 
 import pygame
 import os
@@ -25,7 +25,7 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
-        self.ObstacleFactory = ObstacleFactory()
+        self.ObstacleSpawner = ObstacleSpawner()
 
         # Obstacles
         self.obstacles = []
@@ -48,7 +48,7 @@ class Game:
 
     def update(self):
         self.dino.update()
-        self.obstacles.append(self.ObstacleFactory.create_obstacle(-4))
+        self.obstacles.append(self.ObstacleSpawner.create_obstacle(-4))
 
         for obstacle in self.obstacles:
             obstacle.update()
