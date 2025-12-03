@@ -1,9 +1,12 @@
 from ..entities.dino import Dino
+from ..entities.obstacles.cactus import Cactus
+
 import pygame
 import os
 
 class Game:
     def __init__(self, screen):
+        CACTUS_Y_LEVEL = 200
 
         # Initializing Pygame screen
         self.screen = screen
@@ -22,6 +25,7 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
+        self.cactus = Cactus(1000, CACTUS_Y_LEVEL, -4)
 
         
 
@@ -43,11 +47,14 @@ class Game:
 
     def update(self):
         self.dino.update()
+        self.cactus.update()
 
     def draw(self):
         self.screen.fill("#EDEEF0")
-        self.dino.draw(self.screen, self.frame_count)
         self.screen.blit(self.background, self.background_location)
+        self.dino.draw(self.screen, self.frame_count)
+        self.cactus.draw(self.screen)
+
 
     def handle_events(self):
         for event in pygame.event.get():
