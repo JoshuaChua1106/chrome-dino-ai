@@ -11,4 +11,3 @@ class Cactus(Obstacle):
 
         super().__init__(x, y, speed, self.image)
 
-

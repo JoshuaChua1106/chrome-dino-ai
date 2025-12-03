@@ -49,22 +49,13 @@ class Game:
     def update(self):
         self.dino.update()
 
-        new_obstacle = self.ObstacleSpawner.update()
-        if new_obstacle is not None:
-            self.obstacles.append(new_obstacle)
-
-        if self.obstacles:
-            for obstacle in self.obstacles:
-                obstacle.update()
+        self.ObstacleSpawner.update()
 
     def draw(self):
         self.screen.fill("#EDEEF0")
         self.screen.blit(self.background, self.background_location)
         self.dino.draw(self.screen, self.frame_count)
-        
-        if self.obstacles:
-            for obstacle in self.obstacles:
-                obstacle.draw(self.screen)
+        self.ObstacleSpawner.draw(self.screen)
 
 
     def handle_events(self):

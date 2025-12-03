@@ -16,3 +16,8 @@ class Obstacle:
         self.img_location.centerx = self.x
         screen.blit(self.image, self.img_location)
 
+    def is_off_screen(self, xValue):
+        if self.x < xValue:
+            return True
+        else:
+            return False
