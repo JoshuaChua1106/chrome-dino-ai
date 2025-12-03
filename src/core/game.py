@@ -1,5 +1,6 @@
 from ..entities.dino import Dino
 from ..entities.obstacles.ObstacleSpawner import ObstacleSpawner
+from .CollisionManager import CollisionManager
 
 import pygame
 import os
@@ -26,6 +27,7 @@ class Game:
         # Instantiate classes
         self.dino = Dino()
         self.ObstacleSpawner = ObstacleSpawner(-4)
+        self.CollisionManager = CollisionManager(self.dino, self.ObstacleSpawner)
 
         # Obstacles
         self.obstacles = []
@@ -50,6 +52,8 @@ class Game:
         self.dino.update()
 
         self.ObstacleSpawner.update()
+
+        self.CollisionManager.update()
 
     def draw(self):
         self.screen.fill("#EDEEF0")

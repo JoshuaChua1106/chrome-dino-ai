@@ -6,8 +6,12 @@ class Obstacle:
         self.speed = speed
         self.image = image
 
+        # Obstacle rectangle
+        self.obstacle_rect = self.image.get_rect(topleft=(self.x, self.y))
+
     def update(self):
         self.x += self.speed
+        self.obstacle_rect.topleft = (self.x, self.y)
         
 
     def draw(self, screen):
@@ -21,3 +25,6 @@ class Obstacle:
             return True
         else:
             return False
+        
+    def get_obstacle_rect(self):
+        return self.obstacle_rect

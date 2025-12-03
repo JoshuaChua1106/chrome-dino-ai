@@ -17,7 +17,6 @@ class Dino:
         self.new_height2 = int(self.image2.get_height() * self.scale_factor)
         self.scaled_image2 = pygame.transform.scale(self.image2, (self.new_width, self.new_height))
 
-
         # Dino animation
         self.animation_list = [self.scaled_image, self.scaled_image2]
         self.animation_steps = 2
@@ -26,6 +25,9 @@ class Dino:
         # Dino Location
         self.x = 100
         self.y = 150
+
+        # Dino rectangle
+        self.dino_rect = self.image.get_rect(topleft=(self.x, self.y))
 
         # Dino physics
         self.velocity = 0
@@ -55,6 +57,9 @@ class Dino:
             self.velocity = 0
             self.is_jumping = False
 
+        self.dino_rect.topleft = (self.x, self.y)
+
+
     
     def jump(self):
         if self.is_jumping == False:
@@ -65,3 +70,6 @@ class Dino:
         animation_step = (frame//20) % 2
         screen.blit(self.animation_list[animation_step], self.img_location)
 
+
+    def get_dino_rect(self):
+        return self.dino_rect

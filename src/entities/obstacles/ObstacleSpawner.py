@@ -26,7 +26,6 @@ class ObstacleSpawner:
     def update(self):
         self.current_time = pygame.time.get_ticks()
 
-        print(self.obstacleList)
         if self.should_spawn():
             self.last_spawntime = self.current_time
 
@@ -52,3 +51,10 @@ class ObstacleSpawner:
 
     def getObstacleList(self):
         return self.obstacleList
+    
+    def getObstacleListRect(self):
+        obstacle_rect = []
+        for obstacle in self.obstacleList:
+            obstacle_rect.append(obstacle.get_obstacle_rect())
+        
+        return obstacle_rect
