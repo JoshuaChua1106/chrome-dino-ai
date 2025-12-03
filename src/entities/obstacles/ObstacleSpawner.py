@@ -17,6 +17,7 @@ class ObstacleSpawner:
 
         # Obstacle information
         self.speed = speed
+        self.speed_increaseFactor = 3
 
         # Obstacle Tracking
         self.obstacleList = []
@@ -25,8 +26,11 @@ class ObstacleSpawner:
         self.isStopped = False
 
 
-    def update(self):
+    def update(self, frame_count):
         self.current_time = pygame.time.get_ticks()
+        self.updateSpeed(frame_count)
+        print(frame_count)
+
 
         if self.should_spawn():
             self.last_spawntime = self.current_time
@@ -40,7 +44,6 @@ class ObstacleSpawner:
             obstacle.update()
             if obstacle.is_off_screen(self.offScreenX):  # remove off-screen
                 self.obstacleList.remove(obstacle)
-
 
 
     def should_spawn(self):
@@ -69,3 +72,8 @@ class ObstacleSpawner:
 
     def resetObstacles(self):
         self.obstacleList = []
+    
+    def updateSpeed(self, frame_count):
+        if frame_count % 100 == 0:
+            print("BANG")
+            self.speed *= self.speed_increaseFactor

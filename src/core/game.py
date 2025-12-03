@@ -65,9 +65,9 @@ class Game:
         if self.gamestate == "menu":
             self.MenuState.update()
         elif self.gamestate == "play":
-            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager)
+            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
         elif self.gamestate == "lose":
-            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager)
+            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
 
 
     def draw(self):

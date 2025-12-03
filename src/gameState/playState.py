@@ -5,10 +5,10 @@ class PlayState:
     def __init__(self):
         self.font = pygame.font.SysFont("Arial", 30)  # "Arial", size 30
 
-    def update(self, dino, ObstacleSpawner, CollisionManager):
+    def update(self, dino, ObstacleSpawner, CollisionManager, frame_count):
         
         dino.update()
-        ObstacleSpawner.update()
+        ObstacleSpawner.update(frame_count)
         CollisionManager.update()
 
 
