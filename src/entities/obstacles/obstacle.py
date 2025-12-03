@@ -6,11 +6,11 @@ class Obstacle:
         self.speed = speed
         self.image = image
 
-        def update(self):
-            self.y += speed
+    def update(self):
+        self.y += self.speed
 
-        def draw(self, screen):
-            self.img_location = self.image.get_rect()
-            self.img_location.center = (self.x, self.y)
-            screen.blit(self.image, self.img_location)
+    def draw(self, screen):
+        self.img_location = self.image.get_rect()
+        self.img_location.center = (self.x, self.y)
+        screen.blit(self.image, self.img_location)
 
