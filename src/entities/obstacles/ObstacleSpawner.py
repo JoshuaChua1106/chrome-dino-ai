@@ -22,6 +22,8 @@ class ObstacleSpawner:
         self.obstacleList = []
         self.offScreenX = -10
 
+        self.isStopped = False
+
 
     def update(self):
         self.current_time = pygame.time.get_ticks()
@@ -38,6 +40,8 @@ class ObstacleSpawner:
             obstacle.update()
             if obstacle.is_off_screen(self.offScreenX):  # remove off-screen
                 self.obstacleList.remove(obstacle)
+
+
 
     def should_spawn(self):
         if self.current_time - self.last_spawntime >= self.spawn_interval:
@@ -58,3 +62,7 @@ class ObstacleSpawner:
             obstacle_rect.append(obstacle.get_obstacle_rect())
         
         return obstacle_rect
+    
+    def stopAllObstacles(self):
+        for obstacle in self.obstacleList:
+            obstacle.setIsStopped(True)

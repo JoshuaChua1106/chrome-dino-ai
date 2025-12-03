@@ -26,3 +26,5 @@ class CollisionManager:
     def handleCollision(self):
         if self.isCollided:
             self.dino.setisDead(True)
+            self.ObstacleSpawner.stopAllObstacles()
+            

@@ -11,8 +11,12 @@ class Obstacle:
         # Obstacle rectangle
         self.img_location = self.image.get_rect()
 
+        self.isStopped = False
+
     def update(self):
-        self.x += self.speed
+        if self.isStopped == False:
+            self.x += self.speed
+
         
 
     def draw(self, screen):
@@ -29,3 +33,6 @@ class Obstacle:
         
     def get_obstacle_rect(self):
         return self.img_location
+    
+    def setIsStopped(self, value):
+        self.isStopped = value
