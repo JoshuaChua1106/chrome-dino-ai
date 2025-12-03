@@ -1,3 +1,5 @@
+import pygame
+
 class Obstacle:
     def __init__(self, x, y, speed, image):
         self.x = x
@@ -7,18 +9,17 @@ class Obstacle:
         self.image = image
 
         # Obstacle rectangle
-        self.obstacle_rect = self.image.get_rect(topleft=(self.x, self.y))
+        self.img_location = self.image.get_rect()
 
     def update(self):
         self.x += self.speed
-        self.obstacle_rect.topleft = (self.x, self.y)
         
 
     def draw(self, screen):
-        self.img_location = self.image.get_rect()
         self.img_location.bottom = self.y
         self.img_location.centerx = self.x
         screen.blit(self.image, self.img_location)
+
 
     def is_off_screen(self, xValue):
         if self.x < xValue:
@@ -27,4 +28,4 @@ class Obstacle:
             return False
         
     def get_obstacle_rect(self):
-        return self.obstacle_rect
+        return self.img_location

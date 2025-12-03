@@ -24,10 +24,10 @@ class Dino:
 
         # Dino Location
         self.x = 100
-        self.y = 150
+        self.y = 100
 
         # Dino rectangle
-        self.dino_rect = self.image.get_rect(topleft=(self.x, self.y))
+        self.img_location = self.scaled_image2.get_rect()
 
         # Dino physics
         self.velocity = 0
@@ -38,13 +38,13 @@ class Dino:
         self.is_jumping = False
 
         # Other
-        self.ground_y = 200
+        self.ground_y = 180
 
     def draw(self, screen, frame):
-        self.img_location = self.image.get_rect()
         self.img_location.center = (self.x, self.y)
 
         self.animate(screen, frame)
+
 
 
     def update(self):
@@ -56,8 +56,6 @@ class Dino:
             self.y = self.ground_y
             self.velocity = 0
             self.is_jumping = False
-
-        self.dino_rect.topleft = (self.x, self.y)
 
 
     
@@ -72,4 +70,4 @@ class Dino:
 
 
     def get_dino_rect(self):
-        return self.dino_rect
+        return self.img_location
