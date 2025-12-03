@@ -1,5 +1,5 @@
 from ..entities.dino import Dino
-from ..entities.obstacles.cactus import Cactus
+from ..entities.obstacles.ObstacleFactory import ObstacleFactory
 
 import pygame
 import os
@@ -25,11 +25,12 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
-        self.cactus = Cactus(1000, CACTUS_Y_LEVEL, -4)
+        self.ObstacleFactory = ObstacleFactory()
+
+        # Obstacles
+        self.obstacles = []
 
         
-
-
     def run(self):
         while self.running:
             # Game logic
@@ -47,13 +48,17 @@ class Game:
 
     def update(self):
         self.dino.update()
-        self.cactus.update()
+        self.obstacles.append(self.ObstacleFactory.create_obstacle(-4))
+
+        for obstacle in self.obstacles:
+            obstacle.update()
 
     def draw(self):
         self.screen.fill("#EDEEF0")
         self.screen.blit(self.background, self.background_location)
         self.dino.draw(self.screen, self.frame_count)
-        self.cactus.draw(self.screen)
+        for obstacle in self.obstacles:
+            obstacle.draw(self.screen)
 
 
     def handle_events(self):
