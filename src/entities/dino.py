@@ -14,7 +14,7 @@ class Dino:
 
         # Dino Location
         self.x = 100
-        self.y = 200
+        self.y = 150
 
         # Dino physics
         self.velocity = 0
@@ -25,7 +25,7 @@ class Dino:
         self.is_jumping = False
 
         # Other
-        self.ground_y = 300
+        self.ground_y = 200
 
     def draw(self, screen):
         self.img_location = self.image.get_rect()

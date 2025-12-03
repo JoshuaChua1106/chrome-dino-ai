@@ -7,8 +7,8 @@ import pygame
 def main():
 
     # Attributes
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 800
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 300
 
     # Initialize pygame screen
     pygame.init()
@@ -16,7 +16,7 @@ def main():
 
 
     game = Game(screen)
-    
+
     game.run()
 
     pygame.quit()
