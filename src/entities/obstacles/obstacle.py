@@ -1,16 +1,16 @@
 class Obstacle:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self, x, y, speed, image):
+        self.x = x
+        self.y = y
         
-        self.speed = 0
-
-        self.width = 0
-        self.height = 0
+        self.speed = speed
+        self.image = image
 
         def update(self):
-            pass
+            self.y += speed
 
         def draw(self, screen):
-            pass
+            self.img_location = self.image.get_rect()
+            self.img_location.center = (self.x, self.y)
+            screen.blit(self.image, self.img_location)
 
