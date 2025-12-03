@@ -38,7 +38,7 @@ class Game:
 
     def draw(self):
         self.screen.fill("#EDEEF0")
-        self.dino.draw(self.screen)
+        self.dino.draw(self.screen, self.frame_count)
 
     def handle_events(self):
         for event in pygame.event.get():
