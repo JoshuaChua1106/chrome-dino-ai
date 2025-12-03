@@ -17,7 +17,7 @@ class ObstacleSpawner:
 
         # Obstacle information
         self.speed = speed
-        self.speed_increaseFactor = 3
+        self.speed_increaseFactor = 1.1
 
         # Obstacle Tracking
         self.obstacleList = []
@@ -72,8 +72,9 @@ class ObstacleSpawner:
 
     def resetObstacles(self):
         self.obstacleList = []
+        self.speed = -6
     
     def updateSpeed(self, frame_count):
-        if frame_count % 100 == 0:
+        if frame_count % 500 == 0:
             print("BANG")
             self.speed *= self.speed_increaseFactor

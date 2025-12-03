@@ -102,3 +102,4 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.PlayState.resetGame(self.dino, self.ObstacleSpawner)
                         self.gamestate = "play"
+                        
