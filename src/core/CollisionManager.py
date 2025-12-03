@@ -7,8 +7,12 @@ class CollisionManager:
 
         self.obstacleListRect = []
 
+        self.isCollided = False
+
     def update(self):
         self.checkCollision()
+        self.handleCollision()
+
 
     def checkCollision(self):
         dino_rect = self.dino.get_dino_rect()
@@ -16,8 +20,9 @@ class CollisionManager:
 
         for obstacleRect in self.obstacleListRect:
             if dino_rect.colliderect(obstacleRect):
-                print("Collision detected!")
+                self.isCollided = True
         
-
+        
     def handleCollision(self):
-        pass
+        if self.isCollided:
+            self.dino.setisDead(True)

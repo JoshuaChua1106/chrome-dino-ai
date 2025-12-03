@@ -22,6 +22,13 @@ class Dino:
         self.animation_steps = 2
         self.animation_cooldown = 500
 
+        # Dino death image
+        self.imageDeath = pygame.image.load(os.path.join("assets", "dino", "DinoDead.png"))
+        self.new_widthDead = int(self.image.get_width() * self.scale_factor)
+        self.new_heightDead = int(self.image.get_height() * self.scale_factor)
+        self.scaled_imageDead = pygame.transform.scale(self.imageDeath, (self.new_width, self.new_height))
+
+
         # Dino Location
         self.x = 100
         self.y = 100
@@ -36,28 +43,38 @@ class Dino:
 
         # Dino state
         self.is_jumping = False
+        self.isDead = False
 
         # Other
         self.ground_y = 180
 
     def draw(self, screen, frame):
-        self.img_location.center = (self.x, self.y)
+        if self.isDead == False:
 
-        self.animate(screen, frame)
+            self.img_location.center = (self.x, self.y)
 
+            self.animate(screen, frame)
+
+        elif self.isDead:
+            screen.blit(self.scaled_imageDead, self.img_location)
+            
 
 
     def update(self):
-        self.velocity += self.gravity
-        self.y += self.velocity
+        if self.isDead == False:
+            self.velocity += self.gravity
+            self.y += self.velocity
 
-        # Stop velocity when dino is on the ground
-        if self.y > self.ground_y:
-            self.y = self.ground_y
+            # Stop velocity when dino is on the ground
+            if self.y > self.ground_y:
+                self.y = self.ground_y
+                self.velocity = 0
+                self.is_jumping = False
+
+            self.die()
+
+        elif self.isDead:
             self.velocity = 0
-            self.is_jumping = False
-
-
     
     def jump(self):
         if self.is_jumping == False:
@@ -69,5 +86,13 @@ class Dino:
         screen.blit(self.animation_list[animation_step], self.img_location)
 
 
+    def die(self):
+        if self.isDead:
+            print("dead")
+
     def get_dino_rect(self):
         return self.img_location
+    
+    def setisDead(self, status):
+        self.isDead = status
+
