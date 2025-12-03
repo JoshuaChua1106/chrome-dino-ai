@@ -20,12 +20,13 @@ class ObstacleSpawner:
 
 
     def update(self):
-        if self.should_spawn:
-            self.last_spawn_time = self.current_time
-            return self.factory.createObstacle(self.speed)
+        print(self.should_spawn())
+        if self.should_spawn():
+            self.last_spawntime = self.current_time
+            return self.factory.create_obstacle(self.speed)
 
     def should_spawn(self):
-        if self.current_time - self.last_spawn_time >= self.spawn_interval:
+        if self.current_time - self.last_spawntime >= self.spawn_interval:
             return True
         else:
             return False
