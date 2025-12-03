@@ -1,5 +1,6 @@
 from ..entities.dino import Dino
 import pygame
+import os
 
 class Game:
     def __init__(self, screen):
@@ -7,6 +8,11 @@ class Game:
         # Initializing Pygame screen
         self.screen = screen
         self.clock = pygame.time.Clock()
+
+        # Background
+        self.background = pygame.image.load(os.path.join("assets", "background", "ground.png"))
+        self.background_location = (0 ,190)
+
 
         # Game states
         self.running = True
@@ -16,6 +22,8 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
+
+        
 
 
     def run(self):
@@ -39,6 +47,7 @@ class Game:
     def draw(self):
         self.screen.fill("#EDEEF0")
         self.dino.draw(self.screen, self.frame_count)
+        self.screen.blit(self.background, self.background_location)
 
     def handle_events(self):
         for event in pygame.event.get():
