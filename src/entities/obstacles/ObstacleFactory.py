@@ -2,7 +2,7 @@ from .cactus import Cactus
 
 import random
 
-class ObstacleSpawner:
+class ObstacleFactory:
     def __init__(self):
         self.CACTUS_X_LEVEL = 1000
         self.CACTUS_Y_LEVEL = 200

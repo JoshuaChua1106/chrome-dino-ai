@@ -25,7 +25,7 @@ class Game:
 
         # Instantiate classes
         self.dino = Dino()
-        self.ObstacleSpawner = ObstacleSpawner()
+        self.ObstacleSpawner = ObstacleSpawner(self.frame_count, -4)
 
         # Obstacles
         self.obstacles = []
@@ -42,13 +42,14 @@ class Game:
             self.clock.tick(60)
             self.frame_count += 1
 
+            print(self.frame_count)
+
             # Updated Pygame
             pygame.display.flip()
 
 
     def update(self):
         self.dino.update()
-        self.obstacles.append(self.ObstacleSpawner.create_obstacle(-4))
 
         for obstacle in self.obstacles:
             obstacle.update()

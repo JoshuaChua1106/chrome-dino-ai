@@ -10,6 +10,7 @@ class ObstacleSpawner:
         # Spawning information
         self.spawn_interval = 0
         self.last_spawntime = 0
+        self.frame_count = frame_count
 
         # Obstacle information
         self.speed = speed
