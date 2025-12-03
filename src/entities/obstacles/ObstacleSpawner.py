@@ -12,7 +12,7 @@ class ObstacleSpawner:
         self.last_spawntime = 0
         self.spawn_interval = 1500 #(ms)
 
-        self.current_time = pygame.time.get_ticks()
+        self.current_time = 0
 
 
         # Obstacle information
@@ -20,7 +20,8 @@ class ObstacleSpawner:
 
 
     def update(self):
-        print(self.should_spawn())
+        self.current_time = pygame.time.get_ticks()
+
         if self.should_spawn():
             self.last_spawntime = self.current_time
             return self.factory.create_obstacle(self.speed)
