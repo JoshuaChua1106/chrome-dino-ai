@@ -19,7 +19,7 @@ class Dino:
         # Dino physics
         self.velocity = 0
         self.gravity = 1
-        self.jump_strength = 1
+        self.jump_strength = -15
 
         # Dino state
         self.is_jumping = False
@@ -36,6 +36,8 @@ class Dino:
     def update(self):
         self.velocity += self.gravity
         self.y += self.velocity
+
+        print(self.velocity)
 
         # Stop velocity when dino is on the ground
         if self.y > self.ground_y:
