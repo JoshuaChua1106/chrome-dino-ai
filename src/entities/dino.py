@@ -36,9 +36,7 @@ class Dino:
     def update(self):
         self.velocity += self.gravity
         self.y += self.velocity
-
-        print(self.velocity)
-
+        
         # Stop velocity when dino is on the ground
         if self.y > self.ground_y:
             self.y = self.ground_y
