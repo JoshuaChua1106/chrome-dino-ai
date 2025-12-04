@@ -177,6 +177,7 @@ class Game:
         return [
             dino.y / 400.0,
             obstacle_distance / 800.0,
-            obstacle_height / 100.0
+            obstacle_height / 100.0,
+            abs(self.ObstacleSpawner.getGameSpeed()) / 10.0
         ]
                         
