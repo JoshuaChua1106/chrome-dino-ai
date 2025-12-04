@@ -87,8 +87,7 @@ class Dino:
 
 
     def die(self):
-        if self.isDead:
-            print("dead")
+        pass
 
     def get_dino_rect(self):
         return self.img_location
