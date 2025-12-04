@@ -135,4 +135,48 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.PlayState.resetGame(self.dino, self.ObstacleSpawner)
                         self.gamestate = "play"
+    
+    def process_ai(self):
+        """Process AI decisions for each dino"""
+        for i, dino in enumerate(self.ai_dinos):
+            if not dino.isDead:
+                # Get AI inputs
+                inputs = self.get_ai_inputs(dino)
+                
+                # Get neural network decision
+                output = self.ai_nets[i].activate(inputs)
+                
+                # Jump if output > 0.5
+                if output[0] > 0.5:
+                    dino.jump()
+        
+        # Update fitness for dead dinos
+        for i, dino in enumerate(self.ai_dinos):
+            if dino.isDead and self.ai_genomes[i].fitness == 0:
+                self.ai_genomes[i].fitness = self.frame_count
+    
+    def get_ai_inputs(self, dino):
+        """Get sensor inputs for AI"""
+        # Find nearest obstacle
+        nearest_obstacle = None
+        min_distance = float('inf')
+        
+        for obstacle in self.ObstacleSpawner.getObstacleList():
+            distance = obstacle.get_distance_to_dino(dino.x)
+            if distance > 0 and distance < min_distance:
+                min_distance = distance
+                nearest_obstacle = obstacle
+        
+        if nearest_obstacle:
+            obstacle_distance = min_distance
+            obstacle_height = nearest_obstacle.getHeight()
+        else:
+            obstacle_distance = 800
+            obstacle_height = 0
+        
+        return [
+            dino.y / 400.0,
+            obstacle_distance / 800.0,
+            obstacle_height / 100.0
+        ]
                         

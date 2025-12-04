@@ -42,6 +42,30 @@ def main(genomes=None, config=None):
         # Run game
         game.run()
 
+def get_ai_inputs(dino, obstacle_spawner):
+    """Get sensor inputs for AI"""
+    # Find nearest obstacle
+    nearest_obstacle = None
+    min_distance = float('inf')
+    
+    for obstacle in obstacle_spawner.getObstacleList():
+        distance = obstacle.get_distance_to_dino(dino.x)
+        if distance > 0 and distance < min_distance:
+            min_distance = distance
+            nearest_obstacle = obstacle
+    
+    if nearest_obstacle:
+        obstacle_distance = min_distance
+        obstacle_height = nearest_obstacle.getHeight()
+    else:
+        obstacle_distance = 800
+        obstacle_height = 0
+    
+    return [
+        dino.y / 400.0,
+        obstacle_distance / 800.0,
+        obstacle_height / 100.0
+    ]
 
 if __name__ == "__main__":
     main()
