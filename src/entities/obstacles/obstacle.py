@@ -36,3 +36,12 @@ class Obstacle:
     
     def setIsStopped(self, value):
         self.isStopped = value
+    
+    def getHeight(self):
+        return self.image.get_height()
+    
+    def getWidth(self):
+        return self.image.get_width()
+    
+    def get_distance_to_dino(self, dino_x):
+        return self.x - dino_x

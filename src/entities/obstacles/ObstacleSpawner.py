@@ -76,5 +76,7 @@ class ObstacleSpawner:
     
     def updateSpeed(self, frame_count):
         if frame_count % 500 == 0:
-            print("BANG")
             self.speed *= self.speed_increaseFactor
+
+    def getGameSpeed(self):
+        return self.speed

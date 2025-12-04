@@ -100,3 +100,6 @@ class Dino:
         self.x = 100
         self.y = 100
         self.isDead = False
+
+    def getDinoHeight(self):
+        return self.y
