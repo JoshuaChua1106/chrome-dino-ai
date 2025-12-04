@@ -10,7 +10,7 @@ import pygame
 import os
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, screen, ai=False):
         CACTUS_Y_LEVEL = 200
 
         # Initializing Pygame screen
@@ -21,6 +21,8 @@ class Game:
         self.background = pygame.image.load(os.path.join("assets", "background", "ground.png"))
         self.background_location = (0 ,190)
 
+        # AI mode
+        self.ai = ai
 
         # Game states
         self.running = True
@@ -40,7 +42,7 @@ class Game:
         self.obstacles = []
 
         # Game state
-        self.gamestate = "menu"
+        self.gamestate = "play" if self.ai else "menu"
 
         
     def run(self):
@@ -55,7 +57,10 @@ class Game:
             self.frame_count += 1
 
             if self.dino.isDead == True:
-                self.gamestate = "lose"
+                if self.ai:
+                    self.running = False  # Stop game immediately in AI mode
+                else:
+                    self.gamestate = "lose"
 
             # Updated Pygame
             pygame.display.flip()
