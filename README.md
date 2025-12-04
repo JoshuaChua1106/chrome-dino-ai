@@ -5,4 +5,10 @@ The project recreates the classic offline dinosaur jumping game and trains neura
 and current game speed. 
 
 Through evolutionary learning, populations of 10 AI players compete over multiple generations, with fitness scores based on survival time, speed adaptation, obstacles cleared, and jump efficiency (with penalties for unnecessary jumps). The system evolves increasingly sophisticated jumping behaviors,
-learning to time jumps precisely to avoid cacti while minimizing wasteful actions.#
+learning to time jumps precisely to avoid cacti while minimizing wasteful actions.
+
+# To run
+To run use the command:
+```
+python neat_trainer.py
+```
