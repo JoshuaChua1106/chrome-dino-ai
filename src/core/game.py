@@ -31,7 +31,14 @@ class Game:
         self.frame_count = 0
 
         # Instantiate classes
-        self.dino = Dino()
+        if not self.ai:
+            self.dino = Dino()
+        else:
+            self.dino = None  # Will be set by main() for AI mode
+            self.ai_dinos = []
+            self.ai_nets = []
+            self.ai_genomes = []
+        
         self.ObstacleSpawner = ObstacleSpawner(-6)
         self.CollisionManager = CollisionManager(self.dino, self.ObstacleSpawner)
         self.MenuState = MenuState()
@@ -56,10 +63,14 @@ class Game:
             self.clock.tick(60)
             self.frame_count += 1
 
-            if self.dino.isDead == True:
-                if self.ai:
-                    self.running = False  # Stop game immediately in AI mode
-                else:
+            if self.ai:
+                # AI mode: process AI decisions and check if all dinos died
+                self.process_ai()
+                if len([d for d in self.ai_dinos if not d.isDead]) == 0:
+                    self.running = False
+            else:
+                # Human mode: check single dino
+                if self.dino.isDead == True:
                     self.gamestate = "lose"
 
             # Updated Pygame
@@ -67,24 +78,41 @@ class Game:
 
 
     def update(self):
-        if self.gamestate == "menu":
-            self.MenuState.update()
-        elif self.gamestate == "play":
-            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
-        elif self.gamestate == "lose":
-            self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
+        if self.ai:
+            # AI mode: update obstacles and AI dinos
+            self.ObstacleSpawner.update(self.frame_count)
+            for dino in self.ai_dinos:
+                if not dino.isDead:
+                    dino.update()
+                    self.CollisionManager.check_dino_collision(dino)
+        else:
+            # Human mode: use existing state system
+            if self.gamestate == "menu":
+                self.MenuState.update()
+            elif self.gamestate == "play":
+                self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
+            elif self.gamestate == "lose":
+                self.PlayState.update(self.dino, self.ObstacleSpawner, self.CollisionManager, self.frame_count)
 
 
     def draw(self):
         self.screen.fill("#EDEEF0")
         self.screen.blit(self.background, self.background_location)
 
-        if self.gamestate == "menu":
-            self.MenuState.draw(self.screen)
-        elif self.gamestate == "play":
-            self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
-        elif self.gamestate == "lose":
-            self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
+        if self.ai:
+            # AI mode: draw obstacles and all AI dinos
+            self.ObstacleSpawner.draw(self.screen)
+            for dino in self.ai_dinos:
+                if not dino.isDead:
+                    dino.draw(self.screen, self.frame_count)
+        else:
+            # Human mode: use existing state system
+            if self.gamestate == "menu":
+                self.MenuState.draw(self.screen)
+            elif self.gamestate == "play":
+                self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
+            elif self.gamestate == "lose":
+                self.PlayState.draw(self.dino, self.ObstacleSpawner, self.screen, self.frame_count, self.gamestate)
 
 
 
