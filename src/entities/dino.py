@@ -80,6 +80,8 @@ class Dino:
         if self.is_jumping == False:
             self.velocity = self.jump_strength
             self.is_jumping = True
+            return True  # Successful jump
+        return False  # Already jumping, no action taken
 
     def animate(self, screen, frame):
         animation_step = (frame//20) % 2

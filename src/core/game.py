@@ -34,6 +34,7 @@ class Game:
         self.fitness = 0
         self.obstacles_cleared = 0
         self.cleared_obstacle_ids = set()  # Track which obstacles have been counted
+        self.total_jumps = 0  # Track total jumps for penalty
 
         # Instantiate classes
         if not self.ai:
@@ -154,7 +155,8 @@ class Game:
                 
                 # Jump if output > 0.5
                 if output[0] > 0.5:
-                    dino.jump()
+                    if dino.jump():  # jump() returns True if jump was successful
+                        self.total_jumps += 1
         
         # Update fitness for dead dinos
         for i, dino in enumerate(self.ai_dinos):
@@ -162,11 +164,12 @@ class Game:
                 self.ai_genomes[i].fitness = self.calculate_fitness()
     
     def calculate_fitness(self):
-        """Calculate fitness based on survival time, game speed, and obstacles cleared"""
+        """Calculate fitness based on survival time, game speed, obstacles cleared, and jump efficiency"""
         base_fitness = self.frame_count  # Base score from survival time
         speed_bonus = abs(self.ObstacleSpawner.getGameSpeed()) * 10  # Bonus for surviving at higher speeds
         obstacle_bonus = self.obstacles_cleared * 50  # Bonus for jumping over obstacles
-        return base_fitness + speed_bonus + obstacle_bonus
+        jump_penalty = self.total_jumps * 5  # Penalty for unnecessary jumps
+        return base_fitness + speed_bonus + obstacle_bonus - jump_penalty
     
     def check_obstacles_cleared(self):
         """Check if any obstacles have been passed by all living dinos"""
