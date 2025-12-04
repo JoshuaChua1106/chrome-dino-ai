@@ -29,6 +29,10 @@ class Game:
 
         # Counting frames
         self.frame_count = 0
+        
+        # Fitness tracking
+        self.fitness = 0
+        self.obstacles_cleared = 0
 
         # Instantiate classes
         if not self.ai:
@@ -81,6 +85,7 @@ class Game:
         if self.ai:
             # AI mode: update obstacles and AI dinos
             self.ObstacleSpawner.update(self.frame_count)
+            self.check_obstacles_cleared()
             for dino in self.ai_dinos:
                 if not dino.isDead:
                     dino.update()
@@ -153,7 +158,29 @@ class Game:
         # Update fitness for dead dinos
         for i, dino in enumerate(self.ai_dinos):
             if dino.isDead and self.ai_genomes[i].fitness == 0:
-                self.ai_genomes[i].fitness = self.frame_count
+                self.ai_genomes[i].fitness = self.calculate_fitness()
+    
+    def calculate_fitness(self):
+        """Calculate fitness based on survival time, game speed, and obstacles cleared"""
+        base_fitness = self.frame_count  # Base score from survival time
+        speed_bonus = abs(self.ObstacleSpawner.getGameSpeed()) * 10  # Bonus for surviving at higher speeds
+        obstacle_bonus = self.obstacles_cleared * 50  # Bonus for jumping over obstacles
+        return base_fitness + speed_bonus + obstacle_bonus
+    
+    def check_obstacles_cleared(self):
+        """Check if any obstacles have been passed by all living dinos"""
+        living_dinos = [dino for dino in self.ai_dinos if not dino.isDead]
+        if not living_dinos:
+            return
+            
+        # Find leftmost living dino position
+        min_dino_x = min(dino.x for dino in living_dinos)
+        
+        # Check obstacles that have been passed
+        for obstacle in self.ObstacleSpawner.getObstacleList():
+            # If obstacle is behind the leftmost dino, it's been cleared
+            if obstacle.x < min_dino_x - 50:  # 50px buffer
+                self.obstacles_cleared += 1
     
     def get_ai_inputs(self, dino):
         """Get sensor inputs for AI"""
