@@ -21,8 +21,21 @@ class NEATTrainer:
         population.add_reporter(neat.StatisticsReporter())
         population.add_reporter(neat.Checkpointer(5))
         
-        # Run evolution - main() will serve as eval_genomes
-        winner = population.run(main, 50)  # 50 generations
+        # Initialize pygame once for all generations
+        import pygame
+        pygame.init()
+        screen = pygame.display.set_mode((1000, 300))
+        pygame.display.set_caption("NEAT Training")
+        
+        # Create wrapper function that passes screen
+        def eval_genomes_with_screen(genomes, config):
+            main(genomes, config, screen)
+        
+        # Run evolution
+        winner = population.run(eval_genomes_with_screen, 50)
+        
+        # Cleanup pygame
+        pygame.quit()
         
         # Save the best genome
         with open("best_genome.pickle", "wb") as f:

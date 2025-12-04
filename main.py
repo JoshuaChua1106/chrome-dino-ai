@@ -4,14 +4,15 @@ import neat
 import sys
 import pygame
 
-def main(genomes=None, config=None):
+def main(genomes=None, config=None, screen=None):
     # Attributes
     SCREEN_WIDTH = 1000
     SCREEN_HEIGHT = 300
 
-    # Initialize pygame screen
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # Initialize pygame screen only if not provided
+    if screen is None:
+        pygame.init()
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     if genomes is None:
         # Human player mode
@@ -41,7 +42,10 @@ def main(genomes=None, config=None):
         
         # Run game
         game.run()
-        pygame.quit()
+        
+        # Only quit pygame if we initialized it (human mode)
+        if screen is None:
+            pygame.quit()
 
 def get_ai_inputs(dino, obstacle_spawner):
     """Get sensor inputs for AI"""
