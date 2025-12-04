@@ -29,7 +29,6 @@ class ObstacleSpawner:
     def update(self, frame_count):
         self.current_time = pygame.time.get_ticks()
         self.updateSpeed(frame_count)
-        print(frame_count)
 
 
         if self.should_spawn():
