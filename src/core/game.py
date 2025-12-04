@@ -33,6 +33,7 @@ class Game:
         # Fitness tracking
         self.fitness = 0
         self.obstacles_cleared = 0
+        self.cleared_obstacle_ids = set()  # Track which obstacles have been counted
 
         # Instantiate classes
         if not self.ai:
@@ -178,9 +179,11 @@ class Game:
         
         # Check obstacles that have been passed
         for obstacle in self.ObstacleSpawner.getObstacleList():
-            # If obstacle is behind the leftmost dino, it's been cleared
-            if obstacle.x < min_dino_x - 50:  # 50px buffer
+            obstacle_id = id(obstacle)  # Use object id as unique identifier
+            # If obstacle is behind the leftmost dino and not already counted
+            if obstacle.x < min_dino_x - 50 and obstacle_id not in self.cleared_obstacle_ids:
                 self.obstacles_cleared += 1
+                self.cleared_obstacle_ids.add(obstacle_id)
     
     def get_ai_inputs(self, dino):
         """Get sensor inputs for AI"""

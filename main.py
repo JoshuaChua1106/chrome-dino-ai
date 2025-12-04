@@ -41,6 +41,7 @@ def main(genomes=None, config=None):
         
         # Run game
         game.run()
+        pygame.quit()
 
 def get_ai_inputs(dino, obstacle_spawner):
     """Get sensor inputs for AI"""
