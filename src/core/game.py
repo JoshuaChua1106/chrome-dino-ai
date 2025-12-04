@@ -167,7 +167,7 @@ class Game:
         """Calculate fitness based on survival time, game speed, obstacles cleared, and jump efficiency"""
         base_fitness = self.frame_count  # Base score from survival time
         speed_bonus = abs(self.ObstacleSpawner.getGameSpeed()) * 10  # Bonus for surviving at higher speeds
-        obstacle_bonus = self.obstacles_cleared * 50  # Bonus for jumping over obstacles
+        obstacle_bonus = self.obstacles_cleared * 10  # Bonus for jumping over obstacles
         jump_penalty = self.total_jumps * 5  # Penalty for unnecessary jumps
         return base_fitness + speed_bonus + obstacle_bonus - jump_penalty
     
